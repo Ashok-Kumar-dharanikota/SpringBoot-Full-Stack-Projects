@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tasks")
+@RequestMapping("/")
 public class TaskController {
 
     @Autowired
     private TaskService taskService;
 
-    @PostMapping
+    @PostMapping("/tasks")
     public Task createTask(@RequestBody Task task) {
         return taskService.createTask(task);
     }
 
-    @GetMapping
+    @GetMapping("/tasks")
     public List<Task> getAllTasks() {
         return taskService.getAllTasks();
     }
@@ -29,12 +29,12 @@ public class TaskController {
         return taskService.getTaskById(taskId);
     }
 
-    @PutMapping("/{taskId}")
+    @PutMapping("/tasks/{taskId}")
     public Task updateTask(@PathVariable Long taskId, @RequestBody Task updatedTask) {
         return taskService.updateTask(taskId, updatedTask);
     }
 
-    @DeleteMapping("/{taskId}")
+    @DeleteMapping("/tasks/{taskId}")
     public String deleteTask(@PathVariable Long taskId) {
         taskService.deleteTask(taskId);
         return "Task deleted successfully";
