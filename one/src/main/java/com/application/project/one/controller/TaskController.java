@@ -35,5 +35,9 @@ public class TaskController {
         return tasks;
     }
 
-
+    @DeleteMapping("/api/tasks")
+    public String deleteAllTasks() {
+        tasks.clear();
+        return "Successfully deleted all";
+    }
 }
