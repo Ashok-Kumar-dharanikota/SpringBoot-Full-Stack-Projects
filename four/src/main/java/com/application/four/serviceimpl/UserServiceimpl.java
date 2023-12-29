@@ -21,6 +21,11 @@ public class UserServiceimpl implements UserService {
         return entityToUserDto(savedUser);
     }
 
+    @Override
+    public void deleteUser(long userId) {
+        userRepository.deleteById(userId);
+    }
+
 
     private Users userDtoToEntity(UserDto userDto) {
         Users users = new Users();

@@ -5,4 +5,6 @@ import com.application.four.payload.UserDto;
 public interface UserService {
 
     public UserDto createUser(UserDto userDto);
+
+    public void  deleteUser(long userId);
 }

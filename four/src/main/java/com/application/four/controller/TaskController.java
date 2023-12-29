@@ -43,4 +43,13 @@ public class TaskController {
 
 
     // delete Individual Tasks
+    @DeleteMapping("/{userId}/tasks/{taskId}")
+    public ResponseEntity<String> deleteTask(
+            @PathVariable(name = "userId") long userId,
+            @PathVariable(name = "taskId") long taskId){
+
+        taskService.deleteTask(userId, taskId);
+        return new ResponseEntity<>("Task deleted Successfully", HttpStatus.OK);
+    }
+
 }
