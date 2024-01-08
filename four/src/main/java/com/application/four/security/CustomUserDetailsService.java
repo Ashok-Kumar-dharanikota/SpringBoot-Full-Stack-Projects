@@ -3,20 +3,24 @@ package com.application.four.security;
 import com.application.four.entity.Users;
 import com.application.four.exception.UserNotFound;
 import com.application.four.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class CustomUserDetailsService implements UserDetailsService {
 
+    @Autowired
     private UserRepository userRepository;
 
     @Override
@@ -32,7 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     public Collection<? extends GrantedAuthority> userAuthorities(Set<String> roles) {
         return roles.stream().map(
-                role -> new SimpleGrantedAuthority(role)
+                SimpleGrantedAuthority::new
                 ).collect(Collectors.toList());
     }
 }
