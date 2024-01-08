@@ -20,13 +20,15 @@ public class JwtTokenProvider {
                 .setSubject(email)
                 .setIssuedAt(currentTime)
                 .setExpiration(expireDate)
-                .signWith(SignatureAlgorithm.HS512, "SECRET_KEY")
+                .signWith(SignatureAlgorithm.HS512, "JWTSecretKey")
                 .compact();
 
         return token;
     }
 
     public String getEmailFromToken(String token) {
-        Jwts.parser().setSigningKey("SECRET_KEY").parseClaimsJws(token).getBody().getSubject();
+        Claims claims = Jwts.parser().setSigningKey("JWTSecretKey").parseClaimsJws(token).getBody();
+
+        return claims.getSubject();
     }
 }

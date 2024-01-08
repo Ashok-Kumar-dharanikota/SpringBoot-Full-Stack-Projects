@@ -1,7 +1,9 @@
 package com.application.four.controller;
 
+import com.application.four.payload.JWTAuthResponse;
 import com.application.four.payload.LoginDto;
 import com.application.four.payload.UserDto;
+import com.application.four.security.JwtTokenProvider;
 import com.application.four.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,20 +27,25 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
     @PostMapping("/register")
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
         return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<JWTAuthResponse> loginUser(@RequestBody LoginDto loginDto) {
         Authentication authentication =
                 authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword())
                 );
-
+        System.out.println(authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new ResponseEntity<>("User Login successfully", HttpStatus.OK);
+        String token = jwtTokenProvider.generateToken(authentication);
+
+        return new ResponseEntity<>(new JWTAuthResponse(token),HttpStatus.OK);
     }
 
 }
