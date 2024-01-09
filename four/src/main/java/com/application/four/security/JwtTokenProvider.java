@@ -1,5 +1,6 @@
 package com.application.four.security;
 
+import com.application.four.exception.APIException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -30,5 +31,16 @@ public class JwtTokenProvider {
         Claims claims = Jwts.parser().setSigningKey("JWTSecretKey").parseClaimsJws(token).getBody();
 
         return claims.getSubject();
+    }
+
+    public boolean validToken(String token) {
+        try {
+            Jwts.parser().setSigningKey("JWTSecretKey")
+                    .parseClaimsJws(token);
+            return true;
+        }
+        catch (Exception e) {
+            throw new APIException("Token issue: "+ e.getMessage());
+        }
     }
 }
