@@ -3,13 +3,12 @@ package com.application.five.payload;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 
-public class EmployeesDto {
+public class EmployeesRegisterDto {
 
     private String name;
     private String email;
-    private String role;
-    private String department;
+    private String password;
 }

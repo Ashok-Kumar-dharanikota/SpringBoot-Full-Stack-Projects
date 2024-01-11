@@ -17,12 +17,18 @@ public class Employees {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = true)
     private String name;
 
-    @Column(name = "role", nullable = false)
+    @Column(name = "role", nullable = true)
     private String role;
 
-    @Column(name = "department", nullable = false)
+    @Column(name = "department", nullable = true)
     private String department;
+
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @Column(name = "password", nullable = false)
+    private String password;
 }

@@ -1,6 +1,8 @@
 package com.application.five.service;
 
 import com.application.five.payload.EmployeesDto;
+import com.application.five.payload.EmployeesLoginDto;
+import com.application.five.payload.EmployeesRegisterDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,7 +10,9 @@ import java.util.List;
 @Service
 public interface EmployeeService {
 
-    public EmployeesDto addEmployee(EmployeesDto employeesDto);
+    public String registerEmployee(EmployeesRegisterDto employeesRegisterDto);
+
+    public String loginEmployee(EmployeesLoginDto employeesLoginDto);
 
     public EmployeesDto getEmployee(long e_Id);
 

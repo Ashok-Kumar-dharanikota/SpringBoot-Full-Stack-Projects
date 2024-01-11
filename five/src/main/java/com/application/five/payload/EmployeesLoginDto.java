@@ -6,10 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class EmployeesDto {
+public class EmployeesLoginDto {
 
-    private String name;
     private String email;
-    private String role;
-    private String department;
+    private String password;
 }
