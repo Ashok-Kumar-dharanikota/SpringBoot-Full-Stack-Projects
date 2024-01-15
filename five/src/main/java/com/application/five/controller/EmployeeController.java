@@ -1,10 +1,14 @@
 package com.application.five.controller;
 
-import com.application.five.entity.Employees;
-import com.application.five.repository.EmployeesRepository;
+import com.application.five.payload.EmployeesLoginDto;
+import com.application.five.payload.EmployeesRegisterDto;
+import com.application.five.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,11 +19,16 @@ import java.util.List;
 public class EmployeeController {
 
     @Autowired
-    private EmployeesRepository employeesRepository;
+    private EmployeeService employeeService;
 
-    public ResponseEntity<List<Employees>> getAllEmployees() {
+    @PostMapping("/login")
+    public ResponseEntity<String> employeeLogin(@RequestBody EmployeesLoginDto employeesLoginDto) {
+        return new ResponseEntity<>(employeeService.loginEmployee(employeesLoginDto),HttpStatus.OK);
+    }
 
-        return new ResponseEntity<>(employeesRepository.findAll(), HttpStatus.OK);
+    @PostMapping("/register")
+    public ResponseEntity<String> employeeRegistration(@RequestBody EmployeesRegisterDto employeesRegisterDto) {
+        return  new ResponseEntity<>(employeeService.registerEmployee(employeesRegisterDto),HttpStatus.OK);
     }
 
 }
