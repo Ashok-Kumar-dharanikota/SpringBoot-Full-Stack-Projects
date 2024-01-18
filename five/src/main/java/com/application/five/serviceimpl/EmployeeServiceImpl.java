@@ -9,11 +9,6 @@ import com.application.five.payload.EmployeesRegisterDto;
 import com.application.five.repository.EmployeesRepository;
 import com.application.five.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,18 +18,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeesRepository employeesRepository;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public String registerEmployee(EmployeesRegisterDto employeesRegisterDto) {
         Employees employee = employeesRepository.findByEmail(employeesRegisterDto.getEmail()).orElseThrow(
                 () -> new EmployeeAlreadyExcistException("Employee with this email is already Excist")
         );
-        employeesRegisterDto.setPassword(passwordEncoder.encode(employeesRegisterDto.getPassword()));
         Employees savedEmployee = DtoToEntity(employeesRegisterDto);
         employeesRepository.save(savedEmployee);
 
@@ -46,9 +36,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employees employee = employeesRepository.findByEmail(employeesLoginDto.getEmail()).orElseThrow(
                 () -> new EmployeeNotFoundException("Employee with this email is not Exsist")
         );
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(employeesLoginDto.getEmail(),employeesLoginDto.getPassword()));
-        System.out.println(authentication);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
         return "Login Successfully";
     }
 
